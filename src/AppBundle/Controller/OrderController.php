@@ -40,7 +40,7 @@ class OrderController extends Controller
             /**
      * @Route("/order/list", name="list")
      */
-    public function listdAction(Request $request)
+    public function listAction(Request $request)
     {
         // replace this example code with whatever you need
         return $this->render('order/list.html.twig', [
