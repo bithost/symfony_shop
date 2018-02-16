@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<p><a href="/item/list"><button type="button" class="btn btn-primary">Back to Items List</button></a></p> <br />
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4">View Item: {{item.name}}</h1>
+    </div>
+<p>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+      <img src="https://picsum.photos/458/354" alt="No image">
+    </a>
+  </div>
+
+</div>
+    </div>
+    <div class="col">
+      <ul class="list-group">
+        <li class="list-group-item">Name: {{item.name}}</li>
+        <li class="list-group-item">Price: &euro;{{item.price}}</li>
+        {% if item.available == 1 %}
+        <li class="list-group-item list-group-item-success">In Stock</li>
+        {% else %}
+          <li class="list-group-item list-group-item-danger">Sold Out</li>
+        {% endif %}
+    </ul>
+        <h5>About item:</h4>
+     <p class="text-left">{{item.description}}</p>
+    </div>
+  </div>
+
+{% endblock %}
