@@ -7,6 +7,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 class ItemController extends Controller
 {
     /**
@@ -27,8 +33,24 @@ class ItemController extends Controller
      */
     public function createAction(Request $request)
     {
+        $item = new Item;
+        
+        $form = $this->createFormBuilder($item)
+            ->add('name', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+            ->add('price', IntegerType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+            ->add('description', TextareaType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+            ->add('available', ChoiceType::class, array('choices'  => array('Yes' => 'Yes','No' => 'No'),'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+            ->add('save', SubmitType::class, array('label' => 'Create New Item','attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
+            ->getForm();
+
+         $form->handleRequest($request);
+         
+         if($form->isSubmitted() && $form->isValid()){
+             die("Form Submitted");
+         }
         // replace this example code with whatever you need
-        return $this->render('item/create.html.twig', []);
+        return $this->render('item/create.html.twig', array(
+            'form' => $form->createView(),));
     }
 
     /**
