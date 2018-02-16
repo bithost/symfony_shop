@@ -10,7 +10,7 @@
 <table class="table table-striped">
 
 <tr>
-{% for item in items %}
+{% for item in items if item.available == 1 %}
 <td>
  <div class="container">
       <div class="card-deck mb-2 text-center">
@@ -20,7 +20,7 @@
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title"><small class="text-muted">&euro;{{item.price}}</small></h1>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Order</button><br /><button type="button" class="btn btn-success">View</button>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Order</button><br /><a href="/item/view/{{item.id}}"><button type="button" class="btn btn-success">View</button></a>
           </div>
        </div>
   </div>
@@ -31,6 +31,6 @@
 
 
 </table>
-
+<p class="lead">View All Items Available to Buy</p>
 
 {% endblock %}
