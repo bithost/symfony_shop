@@ -9,7 +9,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">{{ knp_pagination_sortable(items, 'ID', 'a.id') }}</th>
+      <th scope="col">ID</th>
       <th scope="col">Item Name</th>
       <th scope="col">Item Price</th>
       <th scope="col">In Stock</th>
@@ -29,7 +29,7 @@
        {% endif %}
       
       </td>
-      <td><a href="/item/edit/{{item.id}}"><button type="button" class="btn btn-success">Edit</button></a> <a href="/item/view/{{item.id}}"> <button type="button" class="btn btn-info">View</button></a> <button type="button" class="btn btn-danger">Delete</button>
+      <td><a href="/item/edit/{{item.id}}"><button type="button" class="btn btn-success">Edit</button></a> <a href="/item/view/{{item.id}}"> <button type="button" class="btn btn-info">View</button></a><a href="/item/delete/{{item.id}}"> <button type="button" class="btn btn-danger">Delete</button></a>
 </td>
     </tr>
 {% endfor %}
