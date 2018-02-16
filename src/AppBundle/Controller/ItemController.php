@@ -34,20 +34,29 @@ class ItemController extends Controller
     public function createAction(Request $request)
     {
         $item = new Item;
-        
         $form = $this->createFormBuilder($item)
             ->add('name', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
             ->add('price', IntegerType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
             ->add('description', TextareaType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-            ->add('available', ChoiceType::class, array('choices'  => array('Yes' => 'Yes','No' => 'No'),'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+            ->add('available', ChoiceType::class, array('choices'  => array('Yes' => 1,'No' => 0 ),'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
             ->add('save', SubmitType::class, array('label' => 'Create New Item','attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
             ->getForm();
 
          $form->handleRequest($request);
          
          if($form->isSubmitted() && $form->isValid()){
-             die("Form Submitted");
+            $item = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($item);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Item Created'
+            );
+            return $this->redirectToRoute('view_items');
          }
+         
         // replace this example code with whatever you need
         return $this->render('item/create.html.twig', array(
             'form' => $form->createView(),));
@@ -71,10 +80,77 @@ class ItemController extends Controller
         $items = $this->getDoctrine()
         ->getRepository('AppBundle:Item')
         ->findAll();
+
+        $em = $this->getDoctrine()->getManager();
+        $dql   = "SELECT id FROM AppBundle:Item a";
+        $query = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $items, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            2/*limit per page*/
+        );
+       
+
         // replace this example code with whatever you need
         return $this->render('item/list.html.twig', array(
-            'items' => $items
+            'items' => $pagination,
+            //'pagination' => $pagination,
         ));
     }
+    /**
+     * @Route("/item/edit/{id}", name="edit_item")
+     */
+    public function editAction($id, Request $request)
+    {
+        $item = $this->getDoctrine()
+        ->getRepository('AppBundle:Item')
+        ->find($id);
+
+        $form = $this->createFormBuilder($item)
+        ->add('name', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+        ->add('price', IntegerType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+        ->add('description', TextareaType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+        ->add('available', ChoiceType::class, array('choices'  => array('Yes' => 1,'No' => 0),'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+        ->add('save', SubmitType::class, array('label' => 'Update Item','attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
+        ->getForm();
+
+     $form->handleRequest($request);
+     
+     if($form->isSubmitted() && $form->isValid()){
+        $item = $form->getData();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($item);
+        $em->flush();
+
+        $this->addFlash(
+            'notice',
+            'Item Updated'
+        );
+        return $this->redirectToRoute('view_items');
+     }
+   
+
+        // replace this example code with whatever you need
+      return $this->render('item/edit.html.twig', array(
+            'item' =>$item,
+            'form' => $form->createView(),
+      ));
+    }
+        /**
+     * @Route("/item/view/{id}", name="view_item")
+     */
+    public function viewAction($id,Request $request)
+    {
+        $item = $this->getDoctrine()
+        ->getRepository('AppBundle:Item')
+        ->find($id);
+        // replace this example code with whatever you need
+        return $this->render('item/view.html.twig', array(
+            'item' => $item
+        ));
+    }
+
 
 }
