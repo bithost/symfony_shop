@@ -9,7 +9,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">ID</th>
+      <th scope="col">{{ knp_pagination_sortable(items, 'ID', 'a.id') }}</th>
       <th scope="col">Item Name</th>
       <th scope="col">Item Price</th>
       <th scope="col">In Stock</th>
@@ -17,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-  {% for item in pagination %}
+  {% for item in items %}
     <tr>
       <th scope="row">{{item.id}}</th>
       <td>{{item.name}}</td>
@@ -37,7 +37,7 @@
   </tbody>
 </table>   
 <div class="navigation">
-    {{ knp_pagination_render(pagination) }}
+    {{ knp_pagination_render(items) }}
 </div>
 
 {% endblock %}
