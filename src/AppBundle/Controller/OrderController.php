@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class OrderController extends Controller
 {
     /**
-     * @Route("/order", name="create")
+     * @Route("/order/create", name="create")
      */
     public function createAction(Request $request)
     {
@@ -37,14 +37,22 @@ class OrderController extends Controller
         return $this->render('order/delete.html.twig', [
         ]);
     }
-
-        /**
+            /**
      * @Route("/order/list", name="list")
      */
-    public function readAction(Request $request)
+    public function listdAction(Request $request)
     {
         // replace this example code with whatever you need
         return $this->render('order/list.html.twig', [
+        ]);
+    }
+        /**
+     * @Route("/order/view", name="view")
+     */
+    public function viewAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('order/view.html.twig', [
         ]);
     }
 
