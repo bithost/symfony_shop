@@ -67,9 +67,18 @@ class ItemController extends Controller
      */
     public function deleteAction($id, Request $request)
     {
-        die("DELETE");
-        // replace this example code with whatever you need
-       // return $this->render('item/create.html.twig', []);
+        $em = $this->getDoctrine()->getManager();
+        $item = $em->getRepository('AppBundle:Item')->find($id);
+
+        $em->remove($item);
+        $em->flush();
+
+        $this->addFlash(
+            'notice',
+            'Item Removed'
+        );
+
+        return $this->redirectToRoute('view_items');
     }
 
         /**
@@ -89,7 +98,7 @@ class ItemController extends Controller
         $pagination = $paginator->paginate(
             $items, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            2/*limit per page*/
+            10/*limit per page*/
         );
        
 
