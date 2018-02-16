@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Item;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,9 +14,13 @@ class ItemController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $items = $this->getDoctrine()
+            ->getRepository('AppBundle:Item')
+            ->findAll();
         // replace this example code with whatever you need
-        return $this->render('item/index.html.twig', [
-        ]);
+        return $this->render('item/index.html.twig', array(
+            'items' => $items
+        ));
     }
     /**
      * @Route("/item/create", name="new_item")
