@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<p><a href="/item/list"><button type="button" class="btn btn-primary">Back to Items List</button></a></p> <br />
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4">Edit Item: {{item.name}}</h1>
+    </div>
+<p>
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+
+</P>
+{% endblock %}
