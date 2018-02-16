@@ -41,4 +41,18 @@ class ItemController extends Controller
        // return $this->render('item/create.html.twig', []);
     }
 
+        /**
+     * @Route("/item/list", name="view_items")
+     */
+    public function listAction(Request $request)
+    {
+        $items = $this->getDoctrine()
+        ->getRepository('AppBundle:Item')
+        ->findAll();
+        // replace this example code with whatever you need
+        return $this->render('item/list.html.twig', array(
+            'items' => $items
+        ));
+    }
+
 }
