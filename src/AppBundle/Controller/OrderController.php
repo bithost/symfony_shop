@@ -14,7 +14,7 @@ class OrderController extends Controller
     public function createAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/create.html.twig', [
+        return $this->render('order/create.html.twig', [
         ]);
     }
 
@@ -24,7 +24,7 @@ class OrderController extends Controller
     public function editAction($id, Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/edit.html.twig', [
+        return $this->render('order/edit.html.twig', [
         ]);
     }
 
@@ -34,7 +34,7 @@ class OrderController extends Controller
     public function deleteAction($id, Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/delete.html.twig', [
+        return $this->render('order/delete.html.twig', [
         ]);
     }
 
@@ -44,7 +44,7 @@ class OrderController extends Controller
     public function readAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/list.html.twig', [
+        return $this->render('order/list.html.twig', [
         ]);
     }
 
