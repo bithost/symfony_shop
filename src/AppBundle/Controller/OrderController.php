@@ -76,9 +76,25 @@ class OrderController extends Controller
      */
     public function listAction(Request $request)
     {
+        $orders = $this->getDoctrine()
+        ->getRepository('AppBundle:Orders')
+        ->findAll();
+
+        //$em = $this->getDoctrine()->getManager();
+        //$dql   = "SELECT id FROM AppBundle:Item a";
+        //$query = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $orders, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+       
+
         // replace this example code with whatever you need
-        return $this->render('order/list.html.twig', [
-        ]);
+        return $this->render('order/list.html.twig',  array(
+            'orders' => $pagination,));
     }
         /**
      * @Route("/order/view", name="view")
