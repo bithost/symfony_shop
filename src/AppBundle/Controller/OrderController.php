@@ -97,9 +97,18 @@ class OrderController extends Controller
      */
     public function deleteAction($id, Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('order/delete.html.twig', [
-        ]);
+        $em = $this->getDoctrine()->getManager();
+        $order = $em->getRepository('AppBundle:Orders')->find($id);
+
+        $em->remove($order);
+        $em->flush();
+
+        $this->addFlash(
+            'notice',
+            'Order Removed'
+        );
+
+        return $this->redirectToRoute('list_orders');
     }
             /**
      * @Route("/order/list", name="list_orders")
