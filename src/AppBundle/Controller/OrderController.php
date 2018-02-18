@@ -118,5 +118,4 @@ class OrderController extends Controller
         $em->flush();
         return $this->redirectToRoute('list_orders');
      }
-    }
 }
