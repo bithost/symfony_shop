@@ -17,9 +17,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 class OrderController extends Controller
 {
     /**
-     * @Route("/order/create/{id}", name="create")
+     * @Route("/order/create", name="create")
      */
-    public function createAction($id, Request $request)
+    public function createAction(Request $request)
     {
         $order = new Orders;
         $form = $this->createFormBuilder($order)
