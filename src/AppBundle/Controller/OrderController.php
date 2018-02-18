@@ -57,9 +57,39 @@ class OrderController extends Controller
      */
     public function editAction($id, Request $request)
     {
+        $order = $this->getDoctrine()
+        ->getRepository('AppBundle:Orders')
+        ->find($id);
+
+        $form = $this->createFormBuilder($order)
+            ->add('customerName', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px','readonly' => true)))
+            ->add('quantity', IntegerType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px','readonly' => true)))
+            ->add('totalPrice', IntegerType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px','readonly' => true)))
+            ->add('orderStatus', ChoiceType::class, array('choices'  => array('In Progress' => 1,'Sent' => 2,'Deliverred' => 3, 'Cancelled' => 4),'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+            ->add('save', SubmitType::class, array('label' => 'Update Order','attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
+            ->getForm();
+
+         $form->handleRequest($request);
+         
+         if($form->isSubmitted() && $form->isValid()){
+            $order = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($order);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Order Updated'
+            );
+            return $this->redirectToRoute('list_orders');
+         }
+   
+
         // replace this example code with whatever you need
-        return $this->render('order/edit.html.twig', [
-        ]);
+      return $this->render('order/edit.html.twig', array(
+            'order' =>$order,
+            'form' => $form->createView(),
+      ));
     }
 
     /**
