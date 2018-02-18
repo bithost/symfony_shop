@@ -25,7 +25,7 @@ class OrderController extends Controller
         $form = $this->createFormBuilder($order)
             ->add('customerName', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
             ->add('quantity', IntegerType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-            ->add('totalPrice', IntegerType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+            ->add('totalPrice', IntegerType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px','readonly' => true)))
             ->add('orderStatus', HiddenType::class, array('data' => 1))
             ->add('save', SubmitType::class, array('label' => 'Create New Order','attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
             ->getForm();
