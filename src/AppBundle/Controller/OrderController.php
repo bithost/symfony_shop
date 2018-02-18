@@ -136,12 +136,16 @@ class OrderController extends Controller
             'orders' => $pagination,));
     }
         /**
-     * @Route("/order/view", name="view")
+     * @Route("/order/view/{id}", name="view")
      */
-    public function viewAction(Request $request)
+    public function viewAction($id, Request $request)
     {
+        $order = $this->getDoctrine()
+        ->getRepository('AppBundle:Orders')
+        ->find($id);
         // replace this example code with whatever you need
-        return $this->render('order/view.html.twig', [
-        ]);
+        return $this->render('order/view.html.twig', array(
+            'order' => $order
+        ));
     }
 }
