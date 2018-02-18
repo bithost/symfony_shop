@@ -4,40 +4,49 @@
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">All Placed Orders</h1>
-      <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
-    </div>
-
- <table class="table table-striped">
+ </div>
+<br />
+<table id="items" class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Order Name</th>
-      <th scope="col">Customer</th>
+      <th scope="col" >ID</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Order Price</th>
+      <th scope="col">Order Status</th>
       <th scope="col">Options</th>
     </tr>
   </thead>
   <tbody>
+  {% for order in orders %}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td><button type="button" class="btn btn-success">Edit</button> <button type="button" class="btn btn-info">View</button> <button type="button" class="btn btn-danger">Delete</button>
+      <th scope="row">{{order.id}}</th>
+      <td>{{order.customerName}}</td>
+      <td>{{order.quantity}}</td>
+      <td>&euro;{{order.totalPrice}}</td>
+      <td>{% if order.orderStatus == 1 %}
+        In progress
+      {% elseif order.orderStatus == 2 %}
+       Sent
+       {% elseif order.orderStatus == 3 %}
+       Delivered
+    {% elseif order.orderStatus == 4 %}
+      Cancelled
+       {% endif %}
+      
+      </td>
+      <td><a href="/order/edit/{{order.id}}"><button type="button" class="btn btn-success">Edit</button></a> <a href="/order/view/{{order.id}}"> <button type="button" class="btn btn-info">View</button></a><a href="/order/delete/{{order.id}}"> <button type="button" class="btn btn-danger">Delete</button></a>
 </td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td><button type="button" class="btn btn-success">Edit</button> <button type="button" class="btn btn-info">View</button> <button type="button" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td><button type="button" class="btn btn-success">Edit</button> <button type="button" class="btn btn-info">View</button> <button type="button" class="btn btn-danger">Delete</button></td>
-    </tr>
+{% endfor %}
+
   </tbody>
 </table>   
+<div class="navigation">
+    {{ knp_pagination_render(orders) }}
+</div>
+<br />
+
 
 
 
