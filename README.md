@@ -3,4 +3,4 @@ shop
 
 School Homework project. 
 
-Demo: https://github.com/bithost/symfony_shop
+Demo: https://desolate-badlands-42046.herokuapp.com
