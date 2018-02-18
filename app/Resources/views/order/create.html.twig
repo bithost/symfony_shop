@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block javascripts %}
+{{ parent() }}
 <script>
 $("#form_quantity").keyup(function () {
 $("#form_totalPrice").val($("#form_quantity").val() * $("price").val())
 });
 </script>
-
 {% endblock %}
 {% block body %}
 
