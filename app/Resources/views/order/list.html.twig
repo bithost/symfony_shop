@@ -1,12 +1,57 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+<script type="text/javascript">
+(function(document) {
+	'use strict';
+
+	var LightTableFilter = (function(Arr) {
+
+		var _input;
+
+		function _onInputEvent(e) {
+			_input = e.target;
+			var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+			Arr.forEach.call(tables, function(table) {
+				Arr.forEach.call(table.tBodies, function(tbody) {
+					Arr.forEach.call(tbody.rows, _filter);
+				});
+			});
+		}
+
+		function _filter(row) {
+			var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+			row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+		}
+
+		return {
+			init: function() {
+				var inputs = document.getElementsByClassName('light-table-filter');
+				Arr.forEach.call(inputs, function(input) {
+					input.oninput = _onInputEvent;
+				});
+			}
+		};
+	})(Array.prototype);
+
+	document.addEventListener('readystatechange', function() {
+		if (document.readyState === 'complete') {
+			LightTableFilter.init();
+		}
+	});
+
+})(document);
+</script>
+{% endblock %}
 {% block body %}
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">All Placed Orders</h1>
  </div>
 <br />
-<table id="items" class="table table-striped">
+<input type="search" class="light-table-filter form-control" data-table="order-table" placeholder="Filter">
+<br />
+<table class="table table-striped order-table">
   <thead>
     <tr>
       <th scope="col" >Order ID</th>
@@ -20,7 +65,7 @@
   <tbody>
   {% for order in orders %}
     <tr>
-      <th scope="row">{{order.id}}</th>
+      <td>{{order.id}}</th>
       <td>{{order.customerName}}</td>
       <td>{{order.quantity}}</td>
       <td>&euro;{{order.totalPrice}}</td>
