@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
+{% block javascripts %}
+<script>
+$("#form_quantity").keyup(function () {
+$("#form_totalPrice").val($("#form_quantity").val() * $("price").val())
+});
+</script>
 
+{% endblock %}
 {% block body %}
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -7,14 +14,11 @@
     </div>
 
 <p>
-
+<input type="hidden" id="price" value="5"/>
 {{ form_start(form) }}
 {{ form_widget(form) }}
 {{ form_end(form) }}
 
 
 </P>
-
-
-
 {% endblock %}
